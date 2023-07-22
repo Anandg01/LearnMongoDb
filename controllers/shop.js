@@ -62,9 +62,6 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
 req.user.getCart()
-.then(cart=>{
-return cart
-.getProducts()
 .then(products=>{
   res.render('shop/cart', {
     path: '/cart',
@@ -74,10 +71,7 @@ return cart
 
 })
 .catch(err=>console.log(err))
-})
-.catch(err=>conslog(err))
- 
-};
+}
 
 exports.postcart=(req, res)=>{
 
@@ -88,6 +82,7 @@ exports.postcart=(req, res)=>{
   })
   .then(result=>{
     console.log(result)
+    res.redirect('/cart');
   })
 //  let  fetchedCart;
 //  let newQuintity=1
@@ -123,14 +118,14 @@ exports.postcart=(req, res)=>{
 exports.postCartDeleteItem=(req, res)=>{
   const ProductId=req.body.productId;
 
-  req.user.getCart()
-  .then(cart=>{
-    return cart.getProducts({where:{id:ProductId}})
-  })
-  .then(products=>{
-    const product=products[0];
-    return product.cartItem.destroy();
-  })
+  req.user.deleteCartItem(ProductId)
+  // .then(cart=>{
+  //   return cart.getProducts({where:{id:ProductId}})
+  // })
+  // .then(products=>{
+  //   const product=products[0];
+  //   return product.cartItem.destroy();
+  // })
   .then(()=>{
     res.redirect('/cart')
 

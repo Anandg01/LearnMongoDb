@@ -211,3 +211,12 @@ img{
     display: none;
   }
 }
+li.cart__item {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 500px;
+  gap: 25px;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}

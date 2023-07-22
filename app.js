@@ -23,7 +23,6 @@ app.use((req, res, next)=>{
   User.findUserByid("64bb5d63219b8853ac3070fd")
   .then(user=>{
     req.user=new User(user.name,user.email,user.cart,user._id);
-    console.log("user is present is",user)
     next()
   })
   .catch(err=>console.log(err))
