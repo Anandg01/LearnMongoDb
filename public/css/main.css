@@ -218,5 +218,16 @@ li.cart__item {
   width: 500px;
   gap: 25px;
   background: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px #0000004d;
+}
+li.order-des{
+  background: whitesmoke;
+  margin-top: 10px;
+  width: 70%;
+  height: 35px;
+  border: 2px solid #e9e8e4;
+  box-shadow: 0 0 7px black;
+  list-style: none;
+  display: flex;
+  align-items: center;
 }

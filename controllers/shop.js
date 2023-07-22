@@ -134,8 +134,9 @@ exports.postCartDeleteItem=(req, res)=>{
 }
 
 exports.getOrders = (req, res, next) => {
-  req.user.getOrders({include:['products']})
+  req.user.getOrders()
   .then(order=>{
+    console.log('oreder data =========',order)
     res.render('shop/orders', {
       path: '/orders',
       pageTitle: 'Your Orders',
@@ -145,6 +146,14 @@ exports.getOrders = (req, res, next) => {
   .catch(err=>console.log(err))
 
 };
+exports.postOrder=(req,res)=>{
+  req.user.addOrder()
+  .then(result=>{
+    console.log(result)
+    res.redirect('/orders')
+
+  })
+}
 
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {

@@ -20,8 +20,8 @@ router.get('/products/:productId',shopController.getProduct)
 
 // router.get('/checkout', shopController.getCheckout);
 
-// //router.get('/orders', shopController.getOrders);
-// //router.post('/create-order',shopController.postOrder)
+router.get('/orders', shopController.getOrders)
+router.post('/create-order',shopController.postOrder)
 
 
 module.exports = router;
