@@ -1,10 +1,10 @@
 const Product = require('../models/product');
-const cart= require('../models/cart');
-const Order=require('../models/order')
+// const cart= require('../models/cart');
+// const Order=require('../models/order')
 
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll().then(data=>{
+  Product.fetchAll().then(data=>{
 
     res.render('shop/product-list', {
       prods: data,
@@ -27,9 +27,8 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct=(req, res)=>{
   const probId=req.params.productId;
-  Product.findByPk(probId)
+  Product.findById(probId)
   .then(data=>{
-    
     res.render('shop/product-detail',{
       product:data,
       pageTitle:data.title,
@@ -41,7 +40,7 @@ exports.getProduct=(req, res)=>{
 }
 
 exports.getIndex = (req, res, next) => {
- Product.findAll().then(resutl=>{
+ Product.fetchAll().then(resutl=>{
   res.render('shop/index', {
     prods: resutl,
     pageTitle: 'Shop',
