@@ -15,7 +15,7 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
 
- const product= new Product(title, price, description, imageUrl,null,req.user._id)
+ const product= new Product({title:title, price:price, description:description, imageUrl:imageUrl})
  product.save()
  .then(result=>{
   console.log('Post Created Done')
@@ -52,16 +52,8 @@ exports.postEdit=(req, res, next)=>{
   const updaturl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product1= new Product(updatetitle, price, description,updaturl,  new ObjectId(updateId),req.user._id)
- product1.save()
-  // Product.findByPk(updateId)
-  // .then(product=>{
-  //   product.title=updatetitle;
-  //   product.imageUrl=updaturl;
-  //   product.description=description;
-  //   product.price=price;
-  //  return product.save()
-  // })
+ 
+Product.updateOne({_id:updateId},{title:updatetitle,price:price,description:description,imageUrl:updaturl})
   .then(result=>{
     console.log("updated Record")
     res.redirect('/admin/products');
@@ -74,7 +66,7 @@ exports.postEdit=(req, res, next)=>{
 exports.getProducts = (req, res, next) => {
 
  // Product.findAll()
- Product.fetchAll()
+ Product.find()
   .then(result=>{
     res.render('admin/products', {
       prods: result,
@@ -88,7 +80,7 @@ exports.getProducts = (req, res, next) => {
 exports.postDelet=(req, res)=>{
  const proId=req.body.produtId
 
- Product.deleteById(proId)
+ Product.deleteOne({_id:proId})
 .then(()=>{
   console.log('destroy record...')
   res.redirect('/admin/products')
