@@ -1,10 +1,7 @@
 const Product = require('../models/product');
-// const cart= require('../models/cart');
-// const Order=require('../models/order')
-
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll().then(data=>{
+  Product.find().then(data=>{
 
     res.render('shop/product-list', {
       prods: data,
@@ -13,16 +10,6 @@ exports.getProducts = (req, res, next) => {
     });
   })
   .catch(err=>console.log(err))
- /*
-   Product.fetchAll().then(([row , fielData])=>{
-    res.render('shop/product-list', {
-      prods: row,
-      pageTitle: 'All Products',
-      path:'/products'
-    });
-   })
-   .catch(err=>console.log(err))
- */
 };
 
 exports.getProduct=(req, res)=>{
@@ -40,7 +27,7 @@ exports.getProduct=(req, res)=>{
 }
 
 exports.getIndex = (req, res, next) => {
- Product.fetchAll().then(resutl=>{
+ Product.find().then(resutl=>{
   res.render('shop/index', {
     prods: resutl,
     pageTitle: 'Shop',
@@ -48,16 +35,6 @@ exports.getIndex = (req, res, next) => {
   });
  })
  .catch(err=>console.log(err))
-
-  /*
-  Product.fetchAll().then(([row, fileData])=>{
-    res.render('shop/index', {
-      prods: row,
-      pageTitle: 'Shop',
-      path: '/'
-    });
-  })
-  .catch(err=>console.log(err))*/
 };
 
 exports.getCart = (req, res, next) => {
@@ -136,7 +113,6 @@ exports.postCartDeleteItem=(req, res)=>{
 exports.getOrders = (req, res, next) => {
   req.user.getOrders()
   .then(order=>{
-    console.log('oreder data =========',order)
     res.render('shop/orders', {
       path: '/orders',
       pageTitle: 'Your Orders',

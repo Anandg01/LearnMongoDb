@@ -15,7 +15,7 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
 
- const product= new Product({title:title, price:price, description:description, imageUrl:imageUrl})
+ const product= new Product({title:title, price:price, description:description, imageUrl:imageUrl,userId:req.user})
  product.save()
  .then(result=>{
   console.log('Post Created Done')
@@ -53,7 +53,7 @@ exports.postEdit=(req, res, next)=>{
   const price = req.body.price;
   const description = req.body.description;
  
-Product.updateOne({_id:updateId},{title:updatetitle,price:price,description:description,imageUrl:updaturl})
+Product.updateOne({_id:updateId},{title:updatetitle,price:price,description:description,imageUrl:updaturl,userId:req.user})
   .then(result=>{
     console.log("updated Record")
     res.redirect('/admin/products');
@@ -65,9 +65,11 @@ Product.updateOne({_id:updateId},{title:updatetitle,price:price,description:desc
 
 exports.getProducts = (req, res, next) => {
 
- // Product.findAll()
  Product.find()
+//  .select("imageUrl price -_id")
+//  .populate("userId","email")
   .then(result=>{
+    console.log("populated data",result)
     res.render('admin/products', {
       prods: result,
       pageTitle: 'Admin Products',
