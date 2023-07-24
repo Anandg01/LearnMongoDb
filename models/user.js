@@ -36,6 +36,14 @@ UserSchema.methods.addTocart= function(product){
                 return this.save();
 }
 
+UserSchema.methods.removeTocart=function(productId){
+const updatedCart=this.cart.items.filter(cp=>{
+    return cp.productId.toString()!==productId.toString()
+})
+this.cart.items=updatedCart;
+return this.save()
+}
+
 module.exports=mongoos.model("users",UserSchema)
 // const getDb = require('../util/database').getDb;
 // const mongodb=require("mongodb");

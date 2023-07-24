@@ -39,9 +39,10 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
 req.user
-.populate("cart.items.productId")
+.populate("cart.items.productId",)
 .then(user=>{
   const products=user.cart.items;
+  console.log(products)
   res.render('shop/cart', {
     path: '/cart',
     pageTitle: 'Your Cart',
@@ -63,48 +64,12 @@ exports.postcart=(req, res)=>{
     console.log(result)
     res.redirect('/cart');
   })
-//  let  fetchedCart;
-//  let newQuintity=1
-//   req.user
-//   .getCart()
-//   .then(cart=>{
-//     fetchedCart=cart;
-//     return cart.getProducts({where:{id:probId}})
-//   })
-//   .then(products=>{
-
-//     let product;
-//     if(products.length>0){
-//      product=products[0];
-//        }
-//   if(product){
-//     const oldQuantity=product.cartItem.quantity;
-//     newQuintity=oldQuantity+1;
-//     return product
-//   }
-//    return Product.findByPk(probId)
-//   })
-//  .then(product=>{
-//   return fetchedCart.addProduct(product,{
-//     through:{quantity:newQuintity}
-//   })
-//  }).then(()=>{
-//   res.redirect('/cart');
-//  })
-//   .catch(err=>console.log(err))
 }
 
 exports.postCartDeleteItem=(req, res)=>{
   const ProductId=req.body.productId;
 
-  req.user.deleteCartItem(ProductId)
-  // .then(cart=>{
-  //   return cart.getProducts({where:{id:ProductId}})
-  // })
-  // .then(products=>{
-  //   const product=products[0];
-  //   return product.cartItem.destroy();
-  // })
+  req.user.removeTocart(ProductId)
   .then(()=>{
     res.redirect('/cart')
 
