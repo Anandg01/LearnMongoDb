@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-
+const Order=require('../models/order')
 exports.getProducts = (req, res, next) => {
   Product.find().then(data=>{
 
@@ -78,8 +78,8 @@ exports.postCartDeleteItem=(req, res)=>{
 }
 
 exports.getOrders = (req, res, next) => {
-  req.user.getOrders()
-  .then(order=>{
+  Order.find({"user.userId":req.user._id})
+  .then(order=>{  
     res.render('shop/orders', {
       path: '/orders',
       pageTitle: 'Your Orders',
@@ -90,11 +90,29 @@ exports.getOrders = (req, res, next) => {
 
 };
 exports.postOrder=(req,res)=>{
-  req.user.addOrder()
+  req.user
+.populate("cart.items.productId",)
+.then(user=>{
+  const products=user.cart.items.map(i=>{
+    return {quantity:i.quantity, product:{...i.productId._doc}}
+  })
+  const order=new Order({
+    user:{
+      name:req.user.name,
+      userId:req.user._id
+    },
+    products:products
+  })
+  return order.save()
+  })
   .then(result=>{
-    console.log(result)
-    res.redirect('/orders')
-
+    req.user.ClearCart().then((re)=>{
+   return re;
+    })
+  })
+  .then((re)=>{
+    console.log(re)
+    res.redirect('/cart')
   })
 }
 

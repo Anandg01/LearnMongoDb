@@ -44,6 +44,11 @@ this.cart.items=updatedCart;
 return this.save()
 }
 
+UserSchema.methods.ClearCart=function(){
+    this.cart.items=[];
+    return this.save()
+}
+
 module.exports=mongoos.model("users",UserSchema)
 // const getDb = require('../util/database').getDb;
 // const mongodb=require("mongodb");
